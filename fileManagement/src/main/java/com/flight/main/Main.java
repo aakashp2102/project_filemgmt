@@ -16,16 +16,17 @@ public class Main {
 		
 		LockedmeBOImpl bOItem = new LockedmeBOImpl();
 		Scanner scanner = new Scanner(System.in);
+		System.out.println("\n");
 
 		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++");
 		System.out.println("Welcome to Lockedme.com - File Management System");
 		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++");
 		System.out.println("\n");
 		System.out.println("Developed By- Aakash Patel user Aksh.2102");
-		System.out.println("\n");
-
+		
 		int ch = 0;
 		do {
+			System.out.println("\n");
 			System.out.println("Main Menu");
 			System.out.println("===========");
 			System.out.println("1)List all existing files in the directory");
@@ -42,6 +43,8 @@ public class Main {
 				List<FileObj> fileList = new LinkedList<>();
 				try {
 					fileList=bOItem.listFiles();;
+					System.out.println("Printing List of files in the root directory");
+					System.out.println("--------------------------------------------");
 					for(FileObj f:fileList) {
 						System.out.println(f.toString());
 					}
@@ -73,7 +76,14 @@ public class Main {
 						Fname = scanner.nextLine();
 
 						try {
-							bOItem.addFile(Fname);
+							 FileObj file=bOItem.addFile(Fname);
+							 if (file!=null) {
+								 System.out.println("File Added Successfully. File details are ->");
+								 System.out.println(file.toString());
+							 }
+							 else {
+								 System.out.println("Some error occured during addition of file.");
+							 }
 						} catch (BusinessException e) {
 
 							System.out.println(e.getMessage());
@@ -91,7 +101,15 @@ public class Main {
 						Fname2 = scanner.nextLine();
 
 						try {
-							bOItem.deleteFile(Fname2);
+							FileObj file=bOItem.deleteFile(Fname2);
+							
+							 if (file!=null) {
+								 System.out.println("File Deleted Successfully. File details are ->");
+								 System.out.println(file.toString());
+							 }
+							 else {
+								 System.out.println("Some error occured during removal of file.");
+							 }
 						} catch (BusinessException e) {
 							System.out.println(e.getMessage());
 						}
@@ -106,9 +124,14 @@ public class Main {
 						List<FileObj> fileList2 = new LinkedList<>();
 						try {
 							fileList2=bOItem.searchFile(Fname3);
+							if (fileList2.size()>0) {
+								System.out.println("Printing reuired list of files.");
+								System.out.println("-------------------------------");
 							for(FileObj f:fileList2) {
 								System.out.println(f.toString());
 							}
+							}
+							
 						} catch (BusinessException e) {
 							// TODO Auto-generated catch block
 							System.out.println(e.getMessage());;

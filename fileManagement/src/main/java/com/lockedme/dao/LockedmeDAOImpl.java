@@ -78,18 +78,14 @@ public class LockedmeDAOImpl implements LockedmeDAO {
 		String filePath = file.getPath();
 		String fileType = "Folder";
 
-		long fileSize;
+		long fileSize=0;
 		if (file.getName().contains(".")) {
 			fileType = fname.substring(fname.lastIndexOf("."));
 			fileName = fname.substring(0, fname.lastIndexOf("."));
 			fileSize = file.length();
 
-		} else {
-			long size = FileUtils.sizeOfDirectory(file);
-			fileSize = size;
-
-		}
-
+		} 
+		
 		FileObj addedFile = new FileObj(fname, filePath, fileType, fileSize);
 		return addedFile;}
 		else
@@ -109,24 +105,19 @@ public class LockedmeDAOImpl implements LockedmeDAO {
 		String fileType = "Folder";
 		boolean result;
 
-		long fileSize;
+		long fileSize=0;
 		if (file.getName().contains(".")) {
 			fileType = fname.substring(fname.lastIndexOf("."));
 			fileName = fname.substring(0, fname.lastIndexOf("."));
 			fileSize = file.length();
 
-		} else {
-			long size = FileUtils.sizeOfDirectory(file);
-			fileSize = size;
-
-		}
-
+		} 
 		result=file.delete();
 		if(result) {
 		FileObj deletedFile = new FileObj(fname, filePath, fileType, fileSize);
 		return deletedFile;}
 		else {
-			throw new BusinessException("Could not Delete "+fileName+". Note:Folders can be deleted only if they are empty.");
+			throw new BusinessException("Could not Delete "+fileName+". file/folder not found Note: folders can be deleted only if they are empty.");
 		}
 
 	}
